@@ -119,7 +119,27 @@
             mailtoLink.href = `mailto:arnavakashgupta@gmail.com?subject=${subject}&body=${body}`;
         });
         // Initialize link on page load
+        // Add time range support
         form.dispatchEvent(new Event('input'));
+        document.getElementById('time').insertAdjacentHTML('afterend',
+            `<span style="margin: 0 0.5em;">to</span>
+            <input type="time" id="endTime" required
+            style="padding: 0.5em; width: 40%; border-radius: 6px; border: 1px solid #ccc;">`
+        );
+
+        form.addEventListener('input', function () {
+            const name = encodeURIComponent(document.getElementById('name').value.trim());
+            const email = encodeURIComponent(document.getElementById('email').value.trim());
+            const date = encodeURIComponent(document.getElementById('date').value);
+            const time = encodeURIComponent(document.getElementById('time').value);
+            const endTimeElem = document.getElementById('endTime');
+            const endTime = endTimeElem ? encodeURIComponent(endTimeElem.value) : '';
+            const info = encodeURIComponent(document.getElementById('info').value.trim());
+            let subject = `Tutoring Session Request from ${name || 'Student'}`;
+            let timeRange = time && endTime ? `${time} - ${endTime}` : time;
+            let body = `Name: ${name}\nEmail: ${email}\nRequested Date: ${date}\nRequested Time: ${timeRange}\nAdditional Info: ${info}`;
+            mailtoLink.href = `mailto:arnavakashgupta@gmail.com?subject=${subject}&body=${body}`;
+        });
     </script>
 </body>
 
