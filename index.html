@@ -85,7 +85,42 @@
             Email: <a href="mailto:arnavakashgupta@gmail.com">arnavakashgupta@gmail.com</a><br>
             Phone: (240) 856-4033 (Text, don't call)
         </div>
+        <div class="section-title">Book a Session</div>
+        <div class="section-content">
+            <form id="bookingForm" onsubmit="return false;"
+                style="display: flex; flex-direction: column; gap: 0.5em; align-items: center;">
+                <input type="text" id="name" placeholder="Your Name" required
+                    style="padding: 0.5em; width: 90%; border-radius: 6px; border: 1px solid #ccc;">
+                <input type="email" id="email" placeholder="Your Email" required
+                    style="padding: 0.5em; width: 90%; border-radius: 6px; border: 1px solid #ccc;">
+                <input type="date" id="date" required
+                    style="padding: 0.5em; width: 90%; border-radius: 6px; border: 1px solid #ccc;">
+                <input type="time" id="time" required
+                    style="padding: 0.5em; width: 90%; border-radius: 6px; border: 1px solid #ccc;">
+                <textarea id="info" placeholder="Additional Info (e.g. subject, questions)" rows="2"
+                    style="padding: 0.5em; width: 90%; border-radius: 6px; border: 1px solid #ccc;"></textarea>
+                <a id="mailtoLink" href="#"
+                    style="margin-top: 0.5em; background: #2d3a4b; color: #fff; padding: 0.6em 1.2em; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block;">Send
+                    Booking Email</a>
+            </form>
+        </div>
     </div>
+    <script>
+        const form = document.getElementById('bookingForm');
+        const mailtoLink = document.getElementById('mailtoLink');
+        form.addEventListener('input', function () {
+            const name = encodeURIComponent(document.getElementById('name').value.trim());
+            const email = encodeURIComponent(document.getElementById('email').value.trim());
+            const date = encodeURIComponent(document.getElementById('date').value);
+            const time = encodeURIComponent(document.getElementById('time').value);
+            const info = encodeURIComponent(document.getElementById('info').value.trim());
+            let subject = `Tutoring Session Request from ${name || 'Student'}`;
+            let body = `Name: ${name}\nEmail: ${email}\nRequested Date: ${date}\nRequested Time: ${time}\nAdditional Info: ${info}`;
+            mailtoLink.href = `mailto:arnavakashgupta@gmail.com?subject=${subject}&body=${body}`;
+        });
+        // Initialize link on page load
+        form.dispatchEvent(new Event('input'));
+    </script>
 </body>
 
 </html>
